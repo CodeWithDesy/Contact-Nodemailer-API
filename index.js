@@ -31,6 +31,6 @@ api.use((req, res) => {
 
 api.listen(PORT, async ()=>{
     console.log(`Server live on: ${PORT}`)
-    await mongoose.connect('mongodb://127.0.0.1:27017/portfolio-app');
+    await mongoose.connect('mongodb://127.0.0.1:27017/contact-form');
     console.log('database connected')
 });
