@@ -36,8 +36,11 @@ api.use((req, res) => {
     falsePath(req, res)
 })
 
-api.listen(PORT, async ()=>{
-    console.log(`Server live on: ${PORT}`)
-    await mongoose.connect('mongodb://127.0.0.1:27017/contact-form');
-    console.log('database connected')
+api.listen(PORT, async () => {
+  console.log(`Server live on: ${PORT}`);
+  await mongoose.connect('mongodb://127.0.0.1:27017/test');
+  console.log("Database connected")
 });
+
+
+
