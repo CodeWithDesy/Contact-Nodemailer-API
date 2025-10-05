@@ -5,6 +5,13 @@ import express from "express";
 import mongoose from "mongoose"
 import dotenv from "dotenv";
 dotenv.config()
+
+console.log('=== ENVIRONMENT VARIABLES CHECK ===');
+console.log('MONGO_URI exists:', !!process.env.MONGO_URI);
+console.log('MONGO_URI length:', process.env.MONGO_URI?.length);
+console.log('MONGO_URI starts with:', process.env.MONGO_URI?.substring(0, 20));
+console.log('===================================');
+
 import { basePath, falsePath, createProject, fetchProject, deleteProject } from'./controller/project.controller.js'
 import User from'./model/user.model.js'
 import validateLoginMiddleware from'./middeware/auth.validator.js'
