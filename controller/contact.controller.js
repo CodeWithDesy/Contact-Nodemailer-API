@@ -5,6 +5,10 @@ async function sendMessage(req, res) {
   try {
     const { name, email, subject, message } = req.body;
 
+     if (!name || !email || !subject || !message) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
     // save message in database
     const newMessage = new Contact({ name, email, subject, message });
     await newMessage.save();

@@ -19,6 +19,8 @@ import validateLoginMiddleware from'./middeware/auth.validator.js'
 import { loginUser } from'./controller/user.controller.js'
 import { sendMessage, fetchMesaage } from'./controller/contact.controller.js'
 const api = express()
+api.use(express.json())
+api.use(express.urlencoded({extended:true}))
 
 const PORT = 1212
 
@@ -27,9 +29,6 @@ api.use(cors({
     methods: ['POST', 'GET'],
     credentials: true
 }));
-
-api.use(express.json())
-api.use(express.urlencoded({extended:true}))
 
 api.post('/project', createProject)
 api.get('/projects', fetchProject)
