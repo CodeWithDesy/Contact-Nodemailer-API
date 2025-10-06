@@ -38,8 +38,13 @@ api.use((req, res) => {
 
 api.listen(PORT, async () => {
   console.log(`Server live on: ${PORT}`);
-  await mongoose.connect('mongodb://127.0.0.1:27017/test');
-  console.log("Database connected")
+  // Use Atlas URI if available (Render), otherwise use localhost (local dev)
+  const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/contact-form';
+  
+  console.log('Connecting to:', MONGO_URI.includes('mongodb.net') ? 'MongoDB Atlas' : 'Local MongoDB');
+  
+  await mongoose.connect(MONGO_URI);
+  console.log("Database connected");
 });
 
 
