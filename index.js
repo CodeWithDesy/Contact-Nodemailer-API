@@ -36,6 +36,10 @@ api.post('/project/:id', deleteProject)
 api.post('/login', loginUser)
 api.post('/message', sendMessage)
 api.get('/messages', fetchMesaage)
+// ✅ Test route
+api.get("/", (req, res) => {
+  res.send("Backend is live 🚀");
+});
 
 api.all('/', basePath)
 api.use((req, res) => {
