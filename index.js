@@ -3,6 +3,7 @@ console.log("Loaded EMAIL_PASS:", process.env.EMAIL_PASS);
 
 import express from "express";
 import mongoose from "mongoose"
+import cors from "cors"
 import dotenv from "dotenv";
 dotenv.config()
 
@@ -20,6 +21,12 @@ import { sendMessage, fetchMesaage } from'./controller/contact.controller.js'
 const api = express()
 
 const PORT = 1212
+
+api.use(cors({
+    origin: 'https://codewithdesy.netlify.app',
+    methods: ['POST', 'GET'],
+    credentials: true
+}));
 
 api.use(express.json())
 api.use(express.urlencoded({extended:true}))
