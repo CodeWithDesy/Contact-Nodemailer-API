@@ -6,7 +6,7 @@ async function sendMessage(req, res) {
     const { name, email, message } = req.body;
 
     // save message in database
-    const newMessage = new Contact({ name, email, message });
+    const newMessage = new Contact({ name, email, subject, message });
     await newMessage.save();
 
     // transporter
@@ -48,6 +48,7 @@ const mailOptions = {
 
     Name: ${name}
     Email: ${email}
+    Subject: ${subject}
     Message: ${message}
   `,
 };
