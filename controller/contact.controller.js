@@ -34,6 +34,7 @@ async function sendMessage(req, res) {
 
         Name: ${name}
         Email: ${email}
+        Subject: ${subject}
         Message: ${message}
       `,
     });
