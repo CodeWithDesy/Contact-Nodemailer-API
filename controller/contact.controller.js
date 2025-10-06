@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 
 async function sendMessage(req, res) {
   try {
-    const { name, email, message } = req.body;
+    const { name, email, subject, message } = req.body;
 
     // save message in database
     const newMessage = new Contact({ name, email, subject, message });
