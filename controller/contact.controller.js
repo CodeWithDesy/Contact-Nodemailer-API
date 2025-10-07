@@ -1,70 +1,30 @@
 import Contact from './../model/contact.model.js';
-import nodemailer from 'nodemailer';
+import { Resend } from "resend";
 
-async function sendMessage(req, res) {
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+ const sendMessage = async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
 
-     if (!name || !email || !subject || !message) {
-      return res.status(400).json({ error: "All fields are required" });
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({ success: false, message: "All fields are required." });
     }
 
-    // save message in database
-    const newMessage = new Contact({ name, email, subject, message });
-    await newMessage.save();
-
-    // transporter
-    const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: process.env.EMAIL_PORT,
-  secure: process.env.EMAIL_SECURE === "true", // true for 465, false for 587
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-     family: 4, // Force IPv4
-  tls: {
-    rejectUnauthorized: false
-  }
-});
-
-    // send email
-    await transporter.sendMail({
-      from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
-      to: process.env.MAIL_TO,
-      subject: `New message from ${name}`,
-      text: `
-        You received a new message from your portfolio site:
-
-        Name: ${name}
-        Email: ${email}
-        Subject: ${subject}
-        Message: ${message}
-      `,
+    // Send email using Resend API
+    await resend.emails.send({
+      from: "Portfolio Contact <onboarding@resend.dev>",
+      to: process.env.EMAIL_RECEIVER,
+      subject: subject,
+      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
     });
-    // Define mail options
-const mailOptions = {
-  from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
-  to: process.env.MAIL_TO,
-  subject: `New message from ${name}`,
-  text: `
-    You received a new message from your portfolio site:
 
-    Name: ${name}
-    Email: ${email}
-    Subject: ${subject}
-    Message: ${message}
-  `,
-};
-await transporter.sendMail(mailOptions);
-    res
-      .status(201)
-      .json({ message: 'Message received and email sent', data: newMessage });
+    res.status(200).json({ success: true, message: "Message sent successfully!" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'server error' });
+    console.error("Resend error:", error);
+    res.status(500).json({ success: false, message: "Failed to send message." });
   }
-}
+};
 
 async function fetchMesaage(req, res) {
   try {
