@@ -49,7 +49,7 @@ api.use((req, res) => {
 api.listen(PORT, async () => {
   console.log(`Server live on: ${PORT}`);
   // Use Atlas URI if available (Render), otherwise use localhost (local dev)
-  const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/contact-form';
+  const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/contactForm';
   
   console.log('Connecting to:', MONGO_URI.includes('mongodb.net') ? 'MongoDB Atlas' : 'Local MongoDB');
   
